@@ -3,768 +3,581 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online image enhancement tool. Instantly optimize and enhance your images with one click.">
-    <meta name="keywords" content="image enhancement, photo editor, image optimizer, picture enhancer, photo quality improvement, auto enhance">
-    <title>One-Click Image Enhancement Tool - Enhance Images Instantly</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-8579284828112890" crossorigin="anonymous"></script>
+    <meta name="description" content="Vazzles - Free online image enhancement tool. Improve your photos with one click. Adjust contrast, sharpness and clarity easily.">
+    <meta name="keywords" content="image enhancement, photo editor, online tool, contrast, sharpness, clarity, photo improvement">
+    <meta name="author" content="Vazzles">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vazzles.com/">
+    <meta property="og:title" content="Vazzles - Free Online Image Enhancement Tool">
+    <meta property="og:description" content="Enhance your photos with one click. Adjust contrast, sharpness and clarity easily.">
+    <meta property="og:image" content="https://vazzles.com/preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vazzles.com/">
+    <meta property="twitter:title" content="Vazzles - Free Online Image Enhancement Tool">
+    <meta property="twitter:description" content="Enhance your photos with one click. Adjust contrast, sharpness and clarity easily.">
+    <meta property="twitter:image" content="https://vazzles.com/preview.jpg">
+    
+    <title>Vazzles - Free Online Image Enhancement Tool</title>
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
+            padding: 1.5rem 0;
             text-align: center;
-            padding: 1.5rem 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
         }
         
-        header h1 {
-            font-size: 2rem;
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
         
-        header p {
-            font-size: 1rem;
+        .tagline {
+            font-size: 1.2rem;
             opacity: 0.9;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-        
-        .tool-container {
+        .main-content {
             display: flex;
             flex-direction: column;
-            margin: 1.5rem 0;
+            gap: 2rem;
+        }
+        
+        .tool-section {
             background: white;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        @media (min-width: 768px) {
-            .tool-container {
-                flex-direction: row;
-            }
-        }
-        
-        .image-panel {
-            flex: 1;
             padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 400px;
+            box-shadow: var(--shadow);
         }
         
-        .image-container {
-            width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f1f1f1;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
+        .section-title {
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
+            color: var(--primary-color);
         }
         
-        @media (min-width: 768px) {
-            .image-container {
-                height: 400px;
-            }
-        }
-        
-        #image-preview {
-            max-width: 100%;
-            max-height: 100%;
-            display: none;
-        }
-        
-        .placeholder {
-            text-align: center;
-            color: #777;
-        }
-        
-        .upload-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
-        }
-        
-        .upload-btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
-        }
-        
-        .enhance-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
-            margin: 1.5rem 0;
-            display: none;
-        }
-        
-        .enhance-btn:hover {
-            background-color: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
-        }
-        
-        .download-btn {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
-            display: none;
-        }
-        
-        .download-btn:hover {
-            background-color: #219653;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(39, 174, 96, 0.4);
-        }
-        
-        .enhancement-slider {
-            width: 100%;
-            max-width: 400px;
-            margin: 1rem 0;
-            display: none;
-        }
-        
-        .enhancement-level {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 0.5rem;
-        }
-        
-        .enhancement-level span {
-            font-size: 0.9rem;
-            color: #777;
-        }
-        
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #e0e0e0;
-            outline: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-        
-        .ad-container {
-            width: 100%;
-            background-color: #f8f9fa;
-            margin: 2rem 0;
-            text-align: center;
-            border-radius: 10px;
-            overflow: hidden;
-            padding: 1rem;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .top-ad {
-            min-height: 90px;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            overflow: auto;
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 10% auto;
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
             padding: 2rem;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
             text-align: center;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-        
-        .modal-ad {
-            min-height: 250px;
-            margin: 1rem 0;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .continue-download {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            margin-top: 1rem;
-            border-radius: 50px;
+            margin-bottom: 1.5rem;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
         
-        .loading-indicator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            display: none;
-            border-radius: 10px;
+        .upload-area:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(72, 149, 239, 0.05);
         }
         
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(52, 152, 219, 0.2);
-            border-left-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
             margin-bottom: 1rem;
         }
         
-        .loading-text {
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+            flex-grow: 1;
+        }
+        
+        label {
+            margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--dark-color);
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        select, button {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        select {
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .button-icon {
+            font-size: 1.2rem;
+        }
+        
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        
+        .image-container {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .image-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+            background-color: #f0f0f0;
+        }
+        
+        .ad-space {
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .ad-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .ad-container {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
         }
         
         footer {
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 2rem 0;
+            margin-top: 3rem;
             background-color: var(--dark-color);
             color: white;
-            margin-top: 2rem;
         }
         
-        /* Mobile optimizations */
-        @media (max-width: 576px) {
-            header h1 {
-                font-size: 1.5rem;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
             }
             
-            .image-container {
-                height: 250px;
+            .control-group {
+                width: 100%;
             }
             
-            .modal-content {
-                width: 95%;
-                margin: 30% auto;
+            .image-preview {
+                flex-direction: column;
             }
             
-            .upload-btn, .enhance-btn, .download-btn {
-                padding: 0.8rem 1.5rem;
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .tagline {
                 font-size: 1rem;
             }
-        }
-        
-        .before-after-container {
-            display: none;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            margin: 1rem 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .image-compare {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-        }
-        
-        @media (min-width: 768px) {
-            .image-compare {
-                height: 400px;
+            
+            .tool-section {
+                padding: 1.5rem;
             }
         }
         
-        .image-compare img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: absolute;
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
         }
         
-        .before-image {
-            z-index: 1;
-            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        .after-image {
-            z-index: 0;
+        .pulse {
+            animation: pulse 1.5s infinite;
         }
         
-        .slider-handle {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            background: white;
-            transform: translateX(-50%);
-            z-index: 2;
-            cursor: ew-resize;
-        }
-        
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            cursor: ew-resize;
-        }
-        
-        .slider-arrow-left, .slider-arrow-right {
-            width: 0;
-            height: 0;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            margin: 0 2px;
-        }
-        
-        .slider-arrow-left {
-            border-right: 6px solid var(--primary-color);
-        }
-        
-        .slider-arrow-right {
-            border-left: 6px solid var(--primary-color);
-        }
-        
-        .compare-label {
-            position: absolute;
-            bottom: 10px;
-            padding: 5px 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            border-radius: 4px;
-            font-size: 12px;
-            z-index: 4;
-        }
-        
-        .before-label {
-            left: 10px;
-        }
-        
-        .after-label {
-            right: 10px;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>One-Click Image Enhancement</h1>
-        <p>Instantly enhance your images with powerful AI technology</p>
+        <div class="container">
+            <div class="logo">Vazzles</div>
+            <div class="tagline">Enhance your images with one click</div>
+        </div>
     </header>
     
-    <!-- Top AdMob Ad Container -->
-    <div class="ad-container top-ad">
-        <!-- Replace this comment with your AdMob ad unit code -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-app-pub-8579284828112890"
-             data-ad-slot="9150789297"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-    
     <div class="container">
-        <div class="tool-container">
-            <div class="image-panel">
-                <div class="image-container">
-                    <div class="placeholder" id="placeholder-text">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        <p>Upload an image to enhance</p>
-                    </div>
-                    <img id="image-preview" alt="Preview of uploaded image">
-                    <div class="loading-indicator" id="loading-indicator">
-                        <div class="spinner"></div>
-                        <p class="loading-text">Enhancing image...</p>
-                    </div>
-                </div>
-                
-                <div class="before-after-container" id="before-after-container">
-                    <div class="image-compare">
-                        <img id="before-image" class="before-image" alt="Before enhancement">
-                        <img id="after-image" class="after-image" alt="After enhancement">
-                        <div class="slider-handle">
-                            <div class="slider-button">
-                                <div class="slider-arrow-left"></div>
-                                <div class="slider-arrow-right"></div>
-                            </div>
-                        </div>
-                        <div class="compare-label before-label">Before</div>
-                        <div class="compare-label after-label">After</div>
-                    </div>
-                </div>
-                
-                <input type="file" id="image-upload" accept="image/*" style="display: none">
-                <button class="upload-btn" id="upload-btn">Upload Image</button>
-                
-                <div class="enhancement-slider" id="enhancement-slider">
-                    <input type="range" id="enhancement-level" min="1" max="3" value="2" step="1">
-                    <div class="enhancement-level">
-                        <span>Light</span>
-                        <span>Standard</span>
-                        <span>Strong</span>
-                    </div>
-                </div>
-                
-                <button class="enhance-btn" id="enhance-btn">Enhance Image</button>
-                <button class="download-btn" id="download-btn">Download Enhanced Image</button>
-            </div>
-        </div>
-        
-        <!-- Ad Modal -->
-        <div id="ad-modal" class="modal">
-            <div class="modal-content">
-                <h3>Your enhanced image is ready!</h3>
-                <p>Please wait while we prepare your download...</p>
-                
-                <!-- Modal AdMob Ad Container -->
-                <div class="modal-ad">
-                    <!-- Replace this comment with your AdMob ad unit code -->
+        <div class="main-content">
+            <div class="ad-space">
+                <div class="ad-title">Advertisement</div>
+                <div class="ad-container" id="ad-container">
+                    <!-- AdMob ad will be loaded here -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8579284828112890"
+                        crossorigin="anonymous"></script>
+                    <!-- Sample ad unit -->
                     <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-app-pub-8579284828112890"
-                         data-ad-slot="9150789297"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
+                        style="display:block"
+                        data-ad-client="ca-pub-8579284828112890"
+                        data-ad-slot="9150789297"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                     <script>
                         (adsbygoogle = window.adsbygoogle || []).push({});
                     </script>
                 </div>
-                
-                <button class="continue-download" id="continue-download">Download Now</button>
             </div>
+            
+            <section class="tool-section">
+                <h2 class="section-title">Image Enhancement Tool</h2>
+                
+                <div id="upload-area" class="upload-area">
+                    <div class="upload-icon">📁</div>
+                    <p>Click to upload an image or drag and drop</p>
+                    <input type="file" id="file-input" accept="image/*" style="display: none;">
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="enhancement-level">Enhancement Level</label>
+                        <select id="enhancement-level">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    
+                    <button id="apply-btn" disabled>
+                        <span class="button-icon">✨</span>
+                        Apply Enhancement
+                    </button>
+                    
+                    <button id="download-btn" disabled>
+                        <span class="button-icon">⤓</span>
+                        Download Image
+                    </button>
+                </div>
+                
+                <div class="image-preview">
+                    <div class="image-container">
+                        <div class="image-title">Original Image</div>
+                        <canvas id="original-canvas"></canvas>
+                    </div>
+                    <div class="image-container">
+                        <div class="image-title">Enhanced Image</div>
+                        <canvas id="enhanced-canvas"></canvas>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
     
     <footer>
-        <p>© 2025 Image Enhancement Tool. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; <span id="year"></span> Vazzles. All rights reserved.
+            </div>
+        </div>
     </footer>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const imageUpload = document.getElementById('image-upload');
-            const uploadBtn = document.getElementById('upload-btn');
-            const imagePreview = document.getElementById('image-preview');
-            const placeholderText = document.getElementById('placeholder-text');
-            const enhanceBtn = document.getElementById('enhance-btn');
-            const downloadBtn = document.getElementById('download-btn');
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const enhancementSlider = document.getElementById('enhancement-slider');
-            const enhancementLevel = document.getElementById('enhancement-level');
-            const adModal = document.getElementById('ad-modal');
-            const continueDownload = document.getElementById('continue-download');
-            const beforeAfterContainer = document.getElementById('before-after-container');
-            const beforeImage = document.getElementById('before-image');
-            const afterImage = document.getElementById('after-image');
+            // Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
             
-            // Image processing variables
+            // DOM elements
+            const fileInput = document.getElementById('file-input');
+            const uploadArea = document.getElementById('upload-area');
+            const originalCanvas = document.getElementById('original-canvas');
+            const enhancedCanvas = document.getElementById('enhanced-canvas');
+            const applyBtn = document.getElementById('apply-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const enhancementLevel = document.getElementById('enhancement-level');
+            
             let originalImage = null;
             let enhancedImage = null;
             
-            // Event Listeners
-            uploadBtn.addEventListener('click', function() {
-                imageUpload.click();
+            // Event listeners
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('pulse');
+                uploadArea.style.borderColor = 'var(--accent-color)';
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('pulse');
+                uploadArea.style.borderColor = '#ccc';
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('pulse');
+                uploadArea.style.borderColor = '#ccc';
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileUpload(e.dataTransfer.files[0]);
+                }
             });
             
-            imageUpload.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length) {
+                    handleFileUpload(fileInput.files[0]);
+                }
+            });
+            
+            applyBtn.addEventListener('click', applyEnhancement);
+            downloadBtn.addEventListener('click', downloadEnhancedImage);
+            
+            // Functions
+            function handleFileUpload(file) {
                 if (!file.type.match('image.*')) {
-                    alert('Please select an image file');
+                    alert('Please select an image file.');
                     return;
                 }
                 
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        originalImage = img;
-                        displayImage(img);
-                        
-                        // Show enhancement controls
-                        enhanceBtn.style.display = 'block';
-                        enhancementSlider.style.display = 'block';
-                        
-                        // Hide before/after container if visible
-                        beforeAfterContainer.style.display = 'none';
+                    originalImage = new Image();
+                    originalImage.onload = function() {
+                        drawOriginalImage();
+                        applyBtn.disabled = false;
                     };
-                    img.src = e.target.result;
+                    originalImage.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
-            });
+            }
             
-            enhanceBtn.addEventListener('click', function() {
-                if (!originalImage) return;
+            function drawOriginalImage() {
+                const ctx = originalCanvas.getContext('2d');
                 
-                // Show loading
-                loadingIndicator.style.display = 'flex';
+                // Set canvas dimensions to match image, but limit to a reasonable size
+                const maxWidth = 800;
+                const maxHeight = 600;
+                let width = originalImage.width;
+                let height = originalImage.height;
                 
-                // Hide controls during processing
-                enhanceBtn.style.display = 'none';
-                enhancementSlider.style.display = 'none';
+                if (width > maxWidth) {
+                    const ratio = maxWidth / width;
+                    width = maxWidth;
+                    height = height * ratio;
+                }
                 
-                // Simulate enhancement process (would be actual processing in a real app)
-                setTimeout(() => {
-                    // Apply the enhancement
-                    applyEnhancement();
-                    
-                    // Setup before/after comparison
-                    setupBeforeAfterComparison();
-                    
-                    // Hide loading and show download button
-                    loadingIndicator.style.display = 'none';
-                    downloadBtn.style.display = 'block';
-                    
-                    // Show before/after comparison
-                    beforeAfterContainer.style.display = 'block';
-                    
-                    // Hide the original preview
-                    imagePreview.style.display = 'none';
-                }, 2000); // Simulated processing time
-            });
-            
-            downloadBtn.addEventListener('click', function() {
-                // Show ad modal
-                adModal.style.display = 'block';
-            });
-            
-            continueDownload.addEventListener('click', function() {
-                // Hide modal
-                adModal.style.display = 'none';
+                if (height > maxHeight) {
+                    const ratio = maxHeight / height;
+                    height = maxHeight;
+                    width = width * ratio;
+                }
                 
-                // Process and download the enhanced image
-                downloadEnhancedImage();
-            });
-            
-            // Before/After comparison slider functionality
-            const setupComparisonSlider = () => {
-                const sliderHandle = document.querySelector('.slider-handle');
-                const beforeImage = document.querySelector('.before-image');
-                let isDragging = false;
+                originalCanvas.width = width;
+                originalCanvas.height = height;
+                enhancedCanvas.width = width;
+                enhancedCanvas.height = height;
                 
-                const getPercentage = (x) => {
-                    const container = document.querySelector('.image-compare');
-                    const containerRect = container.getBoundingClientRect();
-                    let percent = ((x - containerRect.left) / containerRect.width) * 100;
-                    percent = Math.max(0, Math.min(100, percent));
-                    return percent;
-                };
-                
-                const updateSlider = (x) => {
-                    const container = document.querySelector('.image-compare');
-                    if (!container) return;
-                    
-                    let percent = getPercentage(x);
-                    
-                    sliderHandle.style.left = `${percent}%`;
-                    beforeImage.style.clipPath = `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
-                };
-                
-                const handleDragStart = (e) => {
-                    e.preventDefault();
-                    isDragging = true;
-                };
-                
-                const handleDragMove = (e) => {
-                    if (!isDragging) return;
-                    
-                    // Get proper x position whether it's mouse or touch
-                    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-                    updateSlider(clientX);
-                };
-                
-                const handleDragEnd = () => {
-                    isDragging = false;
-                };
-                
-                // Mouse events
-                sliderHandle.addEventListener('mousedown', handleDragStart);
-                document.addEventListener('mousemove', handleDragMove);
-                document.addEventListener('mouseup', handleDragEnd);
-                
-                // Touch events for mobile
-                sliderHandle.addEventListener('touchstart', handleDragStart);
-                document.addEventListener('touchmove', handleDragMove);
-                document.addEventListener('touchend', handleDragEnd);
-            };
-            
-            // Helper functions
-            function displayImage(img) {
-                imagePreview.src = img.src;
-                imagePreview.style.display = 'block';
-                placeholderText.style.display = 'none';
+                ctx.drawImage(originalImage, 0, 0, width, height);
             }
             
             function applyEnhancement() {
                 if (!originalImage) return;
                 
-                // Create a canvas to apply enhancements
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
+                const level = enhancementLevel.value;
+                let contrast = 1;
+                let brightness = 1;
+                let sharpness = 0;
                 
-                // Set canvas dimensions to match image
-                canvas.width = originalImage.width;
-                canvas.height = originalImage.height;
-                
-                // Get enhancement level (1-3)
-                const level = parseInt(enhancementLevel.value);
-                
-                // Draw original image
-                ctx.drawImage(originalImage, 0, 0);
-                
-                // Apply filters based on enhancement level
-                if (level === 1) {
-                    // Light enhancement
-                    ctx.filter = 'brightness(1.1) contrast(1.1) saturate(1.1)';
-                } else if (level === 2) {
-                    // Standard enhancement
-                    ctx.filter = 'brightness(1.2) contrast(1.3) saturate(1.3)';
-                } else {
-                    // Strong enhancement
-                    ctx.filter = 'brightness(1.3) contrast(1.5) saturate(1.5)';
+                // Set enhancement parameters based on selected level
+                switch(level) {
+                    case 'low':
+                        contrast = 1.1;
+                        brightness = 1.05;
+                        sharpness = 0.5;
+                        break;
+                    case 'medium':
+                        contrast = 1.2;
+                        brightness = 1.1;
+                        sharpness = 1;
+                        break;
+                    case 'high':
+                        contrast = 1.4;
+                        brightness = 1.2;
+                        sharpness = 1.5;
+                        break;
                 }
                 
-                // Draw with filters applied
-                ctx.drawImage(originalImage, 0, 0);
+                // Get original image data
+                const originalCtx = originalCanvas.getContext('2d');
+                const enhancedCtx = enhancedCanvas.getContext('2d');
                 
-                // Store enhanced image data URL
-                enhancedImage = canvas.toDataURL('image/jpeg', 0.92);
+                // First, draw the original image to the enhanced canvas
+                enhancedCtx.drawImage(originalImage, 0, 0, originalCanvas.width, originalCanvas.height);
+                
+                // Apply contrast and brightness
+                const imageData = enhancedCtx.getImageData(0, 0, enhancedCanvas.width, enhancedCanvas.height);
+                const data = imageData.data;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    // Apply contrast and brightness to each RGB channel
+                    data[i] = clamp((data[i] / 255 - 0.5) * contrast * brightness * 255 + 127.5);
+                    data[i + 1] = clamp((data[i + 1] / 255 - 0.5) * contrast * brightness * 255 + 127.5);
+                    data[i + 2] = clamp((data[i + 2] / 255 - 0.5) * contrast * brightness * 255 + 127.5);
+                }
+                
+                enhancedCtx.putImageData(imageData, 0, 0);
+                
+                // Apply sharpness (simplified approach)
+                if (sharpness > 0) {
+                    enhancedCtx.filter = `blur(${1 - sharpness * 0.5}px)`;
+                    enhancedCtx.globalCompositeOperation = 'overlay';
+                    enhancedCtx.drawImage(enhancedCanvas, 0, 0);
+                    enhancedCtx.filter = 'none';
+                    enhancedCtx.globalCompositeOperation = 'source-over';
+                }
+                
+                // Enable download button
+                downloadBtn.disabled = false;
+                
+                // Add fade-in animation
+                enhancedCanvas.classList.add('fade-in');
+                setTimeout(() => enhancedCanvas.classList.remove('fade-in'), 500);
             }
             
-            function setupBeforeAfterComparison() {
-                // Set before and after images
-                beforeImage.src = originalImage.src;
-                afterImage.src = enhancedImage;
-                
-                // Initialize the comparison slider
-                setTimeout(() => {
-                    setupComparisonSlider();
-                }, 100);
+            function clamp(value) {
+                return Math.max(0, Math.min(255, value));
             }
             
             function downloadEnhancedImage() {
-                if (!enhancedImage) return;
+                if (!enhancedCanvas) return;
                 
-                // Create download link
                 const link = document.createElement('a');
-                link.download = 'enhanced-image.jpg';
-                link.href = enhancedImage;
+                link.download = 'vazzles-enhanced-image.png';
+                link.href = enhancedCanvas.toDataURL('image/png');
                 link.click();
             }
-            
-            // Close modal if user clicks outside of it
-            window.addEventListener('click', function(e) {
-                if (e.target === adModal) {
-                    adModal.style.display = 'none';
-                }
-            });
         });
     </script>
 </body>
