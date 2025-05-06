@@ -294,13 +294,11 @@
 
         .banner-ad {
             width: 100%;
-            height: 100px;
-            background-color: #f0f0f0;
+            height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 1rem 0;
-            border-radius: 5px;
             overflow: hidden;
         }
 
@@ -377,6 +375,10 @@
             .result-container {
                 flex-direction: column;
             }
+            
+            .banner-ad {
+                height: auto;
+            }
         }
 
         /* Loading spinner */
@@ -397,9 +399,6 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <script type='text/javascript' src='//pl26471624.profitableratecpm.com/94/99/53/949953aad1916688ef5dc87fa3b6dace.js'></script>
-    
 </head>
 <body>
     <header>
@@ -421,8 +420,17 @@
             
             <div class="ad-container">
                 <div id="banner-ad" class="banner-ad">
-                    <!-- Banner Ad will be loaded here -->
-                    <p>Ad Loading...</p>
+                    <!-- Adstra Banner Ad -->
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'b622916090abf22a45b774a63c9d9214',
+                            'format' : 'iframe',
+                            'height' : 90,
+                            'width' : 728,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/b622916090abf22a45b774a63c9d9214/invoke.js"></script>
                 </div>
             </div>
         </section>
@@ -588,7 +596,6 @@
         const resultsSection = document.getElementById('results');
         const resultContainer = document.getElementById('result-container');
         const spinner = document.getElementById('spinner');
-        const bannerAd = document.getElementById('banner-ad');
 
         // Variables
         let selectedFiles = [];
@@ -751,28 +758,6 @@
             document.body.removeChild(link);
         }
 
-        // AdMob Integration
-        function initializeAds() {
-            // In a real implementation, you would use the AdMob SDK
-            console.log('Initializing AdMob ads...');
-            
-            // Simulate ad loading
-            setTimeout(() => {
-                // Banner Ad
-                bannerAd.innerHTML = `
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4a6bff, #ff6b6b); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
-                        <p>AdMob Banner Ad (ca-app-pub-8579284828112890/7059199492)</p>
-                    </div>
-                `;
-                
-                // Set reward ad as loaded
-                rewardAdLoaded = true;
-                interstitialAdLoaded = true;
-                
-                console.log('Ads loaded successfully');
-            }, 1000);
-        }
-
         function showRewardAd() {
             if (!rewardAdLoaded) {
                 alert('Reward ad is still loading. Please try again shortly.');
@@ -780,7 +765,7 @@
             }
             
             // In a real app, you would show the reward ad here
-            console.log('Showing reward ad: ca-app-pub-8579284828112890/9712207597');
+            console.log('Showing reward ad');
             
             // Simulate ad show and reward
             alert('Thanks for watching our ad! Your compression will now process faster.');
@@ -793,7 +778,7 @@
             if (!interstitialAdLoaded) return;
             
             // In a real app, you would show the interstitial ad here
-            console.log('Showing interstitial ad: ca-app-pub-8579284828112890/2636738756');
+            console.log('Showing interstitial ad');
             
             // Simulate ad show
             const shouldShowAd = Math.random() > 0.5; // 50% chance to show
@@ -813,8 +798,8 @@
                 interstitial.style.color = 'white';
                 interstitial.innerHTML = `
                     <div style="max-width: 80%; text-align: center;">
-                        <h2 style="margin-bottom: 1rem;">AdMob Interstitial Ad</h2>
-                        <p style="margin-bottom: 1.5rem;">ca-app-pub-8579284828112890/2636738756</p>
+                        <h2 style="margin-bottom: 1rem;">Advertisement</h2>
+                        <p style="margin-bottom: 1.5rem;">Support our service by watching this ad</p>
                         <button id="close-ad" style="padding: 0.5rem 1rem; background-color: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Close Ad</button>
                     </div>
                 `;
@@ -835,7 +820,9 @@
 
         // Initialize the app
         window.addEventListener('DOMContentLoaded', () => {
-            initializeAds();
+            // Set ads as loaded (in a real app, you'd wait for the ad SDK to load)
+            rewardAdLoaded = true;
+            interstitialAdLoaded = true;
         });
     </script>
 </body>
